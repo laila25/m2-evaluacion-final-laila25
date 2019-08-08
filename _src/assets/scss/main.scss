@@ -1,3 +1,13 @@
 body {
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.itemList {
+  display: inline-block;
+  padding: 15px;
+  background-color: lightblue;
+  margin: 15px;
+  list-style: none;
+  text-align: center;
 }
