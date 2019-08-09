@@ -51,32 +51,44 @@ function paintData() {
 }
 
 function addToFavourite(ev) {
+  //debugger;
   const itemSelected = ev.currentTarget;
-  favourites.push(info[itemSelected.dataset.index]);
-  favouritesId.push(info[itemSelected.dataset.index].show.id);
-  paintFavourites();
+  if (
+    favouritesId.includes(info[itemSelected.dataset.index].show.id) === false
+  ) {
+    favourites.push(info[itemSelected.dataset.index]);
+    favouritesId.push(info[itemSelected.dataset.index].show.id);
+  }
+  console.log(favouritesId);
   paintData();
+  paintFavourites();
   handleFormData(favourites);
 }
 
 function paintFavourites() {
   listFavourites.innerHTML = "";
-  debugger;
   for (
     let favouriteIndex = 0;
     favouriteIndex < favourites.length;
     favouriteIndex++
   ) {
-    listFavourites.innerHTML += `<li><img class="imglist" src="${
-      favourites[favouriteIndex].show.image.medium
-    }" alt="">
+    let imgSrc;
+    if (favourites[favouriteIndex].show.image === null) {
+      imgSrc = `https://via.placeholder.com/210x295/ffffff/666666/?text=${
+        favourites[favouriteIndex].show.name
+      }`;
+    } else {
+      imgSrc = favourites[favouriteIndex].show.image.medium;
+    }
+    listFavourites.innerHTML += `
+    <li class="main_section_favourites_list_li">
+    <div class="main_section_favourites_list_info"><img class="imglist" src="${imgSrc}" alt="">
         <p>${favourites[favouriteIndex].show.name}</p>
+        </div>
         <button class="btn-remove js-btnRemove" data-btnindex="${favouriteIndex}">X</button>
   </li>`;
   }
   btnRemove = document.querySelectorAll(".js-btnRemove");
-  console.log(btnRemove);
-
   for (const btnRemoveItem of btnRemove) {
     btnRemoveItem.addEventListener("click", removeFromFavourites);
   }
@@ -95,9 +107,10 @@ function handleFormData(data) {
 }
 
 function removeFromFavourites(ev) {
-  const itemRemove = ev.currentTarget;
-  favourites.splice(parseInt(itemRemove.dataset.btnindex), 1);
-  favouritesId.splice(parseInt(itemRemove.dataset.btnindex), 1);
+  const itemRemove = parseInt(ev.currentTarget.dataset.btnindex);
+  favourites.splice(itemRemove, 1);
+  favouritesId.splice(itemRemove, 1);
+  paintData();
   paintFavourites();
   handleFormData(favourites);
 }

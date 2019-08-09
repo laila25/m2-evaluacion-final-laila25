@@ -21,11 +21,57 @@ body {
 
   &_section {
     display: flex;
-    padding: 10px;
+    //background-color: grey;
+    margin-top: 20px;
 
     &_favourites {
-      width: 40%;
+      padding: 0 10px;
+      min-width: 300px;
+      max-width: 300px;
+      //background-color: lightgrey;
+      border-right: solid 1px lightgrey;
+
+      &_list {
+        list-style: none;
+        padding: 0;
+      }
+
+      &_list_li {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 5px;
+        border-bottom: solid 1px lightgrey;
+      }
+
+      &_list_info {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
     }
+  }
+}
+
+.form_input {
+  width: 250px;
+  border-style: none;
+  border-bottom: 1px solid grey;
+  line-height: 25px;
+  margin-right: 10px;
+}
+
+.form_btn {
+  border-style: none;
+  border-radius: 5px;
+  line-height: 30px;
+  padding: 0 10px;
+  transition: all 0.5s;
+
+  &:hover {
+    background-color: darkgrey;
+    color: white;
   }
 }
 
@@ -39,6 +85,17 @@ body {
   background-color: lightblue;
   margin: 15px;
   text-align: center;
+  border-radius: 8px;
+  transition: all 0.5s;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: cyan;
+  }
+}
+
+.itemList img {
+  border-radius: 8px;
 }
 
 .itemList.favourite {
@@ -48,23 +105,18 @@ body {
   margin: 15px;
   text-align: center;
   color: white;
-}
+  border-radius: 8px;
 
-.main_section_favourites_list {
-  list-style: none;
-  padding: 0;
-}
-
-.main_section_favourites_list li {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 5px;
+  &:hover {
+    transform: scale(1);
+    background-color: blue;
+  }
 }
 
 .imglist {
   width: 100%;
   margin-right: 10px;
+  border-radius: 5px;
 
   @media all and(min-width:768px) {
     width: 30%;
@@ -78,8 +130,11 @@ body {
   color: white;
   border-radius: 50%;
   text-align: center;
-  line-height: 25px;
   font-weight: bold;
   border-style: none;
-  margin-left: 20px;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: darkred;
+  }
 }
