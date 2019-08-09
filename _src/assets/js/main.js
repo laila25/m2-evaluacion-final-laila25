@@ -9,6 +9,7 @@ let info = [];
 let itemList = [];
 let favourites = [];
 let favouritesId = [];
+let btnRemove = [];
 
 function getAndPaintData(ev) {
   ev.preventDefault();
@@ -53,7 +54,6 @@ function addToFavourite(ev) {
   const itemSelected = ev.currentTarget;
   favourites.push(info[itemSelected.dataset.index]);
   favouritesId.push(info[itemSelected.dataset.index].show.id);
-  console.log(favouritesId);
   paintFavourites();
   paintData();
   handleFormData(favourites);
@@ -61,13 +61,24 @@ function addToFavourite(ev) {
 
 function paintFavourites() {
   listFavourites.innerHTML = "";
-  for (const favourite of favourites) {
+  debugger;
+  for (
+    let favouriteIndex = 0;
+    favouriteIndex < favourites.length;
+    favouriteIndex++
+  ) {
     listFavourites.innerHTML += `<li><img class="imglist" src="${
-      favourite.show.image.medium
+      favourites[favouriteIndex].show.image.medium
     }" alt="">
-        <p>${favourite.show.name}</p>
-        <button class="btn-remove js-btnRemove">X</button>
+        <p>${favourites[favouriteIndex].show.name}</p>
+        <button class="btn-remove js-btnRemove" data-btnindex="${favouriteIndex}">X</button>
   </li>`;
+  }
+  btnRemove = document.querySelectorAll(".js-btnRemove");
+  console.log(btnRemove);
+
+  for (const btnRemoveItem of btnRemove) {
+    btnRemoveItem.addEventListener("click", removeFromFavourites);
   }
 }
 
@@ -79,21 +90,20 @@ const addFavouriteClass = listIndex => {
   }
 };
 
-/*function removeFromFavourites(listIndex) {
-  const favoriteIndex = favorites.indexOf(listIndex);
-  favorites.splice(favoriteIndex, 1);
-  console.log(favourites);
-}*/
-
-btnSearch.addEventListener("click", getAndPaintData);
-
 function handleFormData(data) {
   localStorage.setItem("userData", JSON.stringify(data));
 }
 
+function removeFromFavourites(ev) {
+  const itemRemove = ev.currentTarget;
+  favourites.splice(parseInt(itemRemove.dataset.btnindex), 1);
+  favouritesId.splice(parseInt(itemRemove.dataset.btnindex), 1);
+  paintFavourites();
+  handleFormData(favourites);
+}
+
 function getLocalStorage() {
   const getData = JSON.parse(localStorage.getItem("userData"));
-  console.log(getData);
   if (getData) {
     for (const getDataItem of getData) {
       favourites.push(getDataItem);
@@ -104,3 +114,5 @@ function getLocalStorage() {
 }
 
 getLocalStorage();
+
+btnSearch.addEventListener("click", getAndPaintData);
